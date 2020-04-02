@@ -10,10 +10,12 @@ exports.main = async(event, context) => {
   var myavatarUrl = event.avatarUrl
   var mynickName = event.nickName
   var myopenid = event.openid
+  var mymanager = event.manager
   try {
     return await db.collection('user').doc(myopenid).set({
       data: {
         avatarUrl: myavatarUrl,
+        manager: mymanager,
         nickName: mynickName,
         openid: myopenid
       }

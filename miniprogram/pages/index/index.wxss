@@ -3,3 +3,12 @@
   z-index: 100;
   width: 100%;
 }
+
+.image{
+  height: 120rpx;
+  width:95%;
+}
+.top_top_images{
+  height:400rpx; 
+  width: 100%;
+}

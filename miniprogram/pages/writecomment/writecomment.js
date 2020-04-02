@@ -82,37 +82,55 @@ Page({
       })
       return
     }
+
     wx.showLoading({
       title: '评论中',
     })
-
     wx.cloud.callFunction({
-      name: 'addComment',
+      name: 'msgSC',
       data: {
-        blogid: myblogid,
-        openid: myopenid,
-        commentdate: mydatetime,
-        content: mycontent
-      },
-      success: function(res) {
-        console.log(res)
-        wx.showToast({
-          title: '评论成功',
-          icon: 'success',
-          success: function() {
-            setTimeout(function() {
-              wx.navigateBack({
-                url: '../blogDetail/blogDetail'
-              })
-            }, 2000);
+        text: mycontent
+      }
+    }).then((res) => {
+      if (res.result.code == "200") {
+        //检测通过
+        wx.cloud.callFunction({
+          name: 'addComment',
+          data: {
+            blogid: myblogid,
+            openid: myopenid,
+            commentdate: mydatetime,
+            content: mycontent
+          },
+          success: function (res) {
+            console.log(res)
+            wx.showToast({
+              title: '评论成功',
+              icon: 'success',
+              success: function () {
+                setTimeout(function () {
+                  wx.navigateBack({
+                    url: '../blogDetail/blogDetail'
+                  })
+                }, 2000);
+              }
+            })
+          },
+          fail: function (res) {
+            console.log(res)
+            wx.showToast({
+              icon: 'none',
+              title: '评论失败',
+            })
           }
         })
-      },
-      fail: function(res) {
-        console.log(res)
+      } else {
+
+        //执行不通过
         wx.showToast({
+          title: '包含敏感字哦。',
           icon: 'none',
-          title: '评论失败',
+          duration: 3000
         })
       }
     })

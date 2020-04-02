@@ -71,10 +71,12 @@ Page({
             success: res => {
               const myavatarUrl = res.userInfo.avatarUrl
               const mynickName = res.userInfo.nickName
+              const mymanager = false
               wx.cloud.callFunction({
                 name: 'addUser',
                 data: {
                   avatarUrl: myavatarUrl,
+                  manager: mymanager,
                   nickName: mynickName,
                   openid: wx.getStorageSync("openid")
                 },
@@ -181,7 +183,7 @@ Page({
     wx.showToast({
       duration:3000,
       icon:'none',
-      title: '云麓谷评论小工具，借鉴自Github：togettoyou',
+      title: '采用了colorui插件，借鉴自Github：togettoyou',
     })
   },
   adviceBt: function() {

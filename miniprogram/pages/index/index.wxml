@@ -1,11 +1,14 @@
+<view class="top_images">
+    <image class="top_top_images"src="/images/top_images.jpg"></image>
+  </view>
 <view wx:for="{{bloginfo}}" wx:key="key" wx:for-index="index" wx:for-item="item">
   <view class="solid-bottom"></view>
   <view class="cu-card case no-card">
     <view class="cu-item shadow">
-      <view class="image" bindtap="viewItem" data-item="{{item}}" data-user="{{userinfo[index]}}">
-        <image src="{{item.picture}}" mode="widthFix"></image>
-        <view class="cu-bar bg-shadeBottom">
-          <text class="text-cut">{{item.title}}</text>
+      <view class="image solid solid::after bg-blue.light" bindtap="viewItem" data-item="{{item}}" data-user="{{userinfo[index]}}">
+        <!-- <image src="{{item.picture}}" mode="widthFix"></image> -->
+        <view class="bg-shadeTop ">
+          <text class="text-cut" style=" width:30px;">{{item.title}}</text>
         </view>
       </view>
       <view class="cu-list menu-avatar">

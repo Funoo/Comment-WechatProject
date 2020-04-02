@@ -11,6 +11,10 @@ Page({
     commentinfo: {},
     commentuserinfo: {},
     isHavaCollect: false,
+    hidden:true,
+    manager:false,
+    // password: null,
+    // rootpassword: 365520,
     myopenid: wx.getStorageSync("openid")
   },
 
@@ -23,6 +27,7 @@ Page({
       blogdata: JSON.parse(options.blogdata),
       bloguserdata: JSON.parse(options.bloguserdata)
     })
+    console.log('bloguserdata' +self.data.bloguserdata.openid)
     wx.setNavigationBarTitle({
       title: JSON.parse(options.blogdata).title
     })
@@ -57,13 +62,54 @@ Page({
         console.log(res)
       }
     })
+    wx.cloud.callFunction({
+      name: 'isManager',
+      data: {
+        // manager: self.data.manager,
+        openid: self.data.myopenid,
+        // ismanager: wx.setStorageSync("manager")
+      },
+      success: function (res) {
+        console.log('res.result')
+        console.log(res.result.data[0].manager)
+        if (res.result.data[0].manager == true){
+          console.log('删除函数执行到了true')
+          self.setData({
+        hidden: false
+      })
+      }
+      else{
+          self.setData({
+            hidden: true
+          })
+      }
+        console.log(res.result)
+      },
+      fail: function (res) {
+        console.log('删除函数执行到了fail')
+        self.setData({
+          hidden: true
+        })
+        console.log(res)
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    // var userid = String(self.data.bloguserdata.openid)
+    // console.log('初次渲染完成' + userid)
+    // var test = userid.charAt(0)
+    console.log('self.data.myopenid')
+    console.log(self.data.myopenid)
+    // console.log(test)
+    // if (test == ')') {
+    //   self.setData({
+    //     hidden: false
+    //   })
+    // }
   },
 
   /**
@@ -77,10 +123,15 @@ Page({
         blogid: self.data.blogdata._id
       },
       success: function(res) {
-        self.setData({
-          commentinfo: res.result.commentinfo.data,
-          commentuserinfo: res.result.commentuserinfo.data
-        })
+        console.log("comment info")
+        console.log(res.result)
+        self.commentinfo = res.result.commentinfo.data[0]
+        self.commentuserinfo = res.result.commentuserinfo.data[0]
+        // self.setData({
+        //   commentinfo: res.result.commentinfo.data,
+        //   commentuserinfo: res.result.commentuserinfo.data
+        // })
+        
       },
       fail: function(res) {
         console.log(res.errMsg)
@@ -193,6 +244,70 @@ Page({
       url: '../writecomment/writecomment?blogid=' + self.data.blogdata._id
     });
   },
+
+  managerDel:function(event) {
+    var blogdata = this.commentinfo
+    console.log(self.data.blogdata)
+    // var blogdata = event.currentTarget.dataset.item
+    // var blogindex = event.currentTarget.dataset.index
+    self = this
+    console.log(self.data.myopenid)
+    wx.showModal({
+      title: '提示',
+      content: '确认删除?',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '加载中',
+          })
+          wx.cloud.callFunction({
+            name: 'deleteBlog',
+            data: {
+              blogid: self.data.blogdata._id
+            },
+            success: function (res) {
+              console.log(res)
+              if (res.result.msg == 'ok') {
+                // wx.cloud.delete({
+                  // fileList: [blogdata.picture],
+                  // success: res => {
+                    
+                    // self.data.bloginfo.splice(blogindex, 1)
+                    // self.data.userinfo.splice(blogindex, 1)
+                    // self.setData({
+                    //   bloginfo: self.data.bloginfo,
+                    //   userinfo: self.data.userinfo
+                    // })
+                  //   self.commentinfo = {};
+                  //   self.commentuserinfo = {};
+                  // },
+                  // fail: console.error
+                // })
+                wx.showToast({
+                  icon: 'none',
+                  title: '删除成功',
+                })
+                self.blogdata = {}
+                self.bloguserdata = {}
+              } else {
+                wx.showToast({
+                  icon: 'none',
+                  title: '删除失败',
+                })
+              }
+            },
+            fail: function (res) {
+              console.log(res)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+
   delcomment: function(event) {
     self = this
     var commentid = event.currentTarget.dataset.id

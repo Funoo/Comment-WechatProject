@@ -101,11 +101,12 @@ Page({
   onDeleteBlog: function(event) {
     var blogdata = event.currentTarget.dataset.item
     var blogindex = event.currentTarget.dataset.index
+    console.log('这是myBlog的blogData：' +blogdata._id)
     console.log(blogdata.title)
     self = this
 
     wx.showModal({
-      title: '提示',
+      title: '提示', 
       content: '确认删除?',
       success(res) {
         if (res.confirm) {
@@ -120,9 +121,9 @@ Page({
             success: function(res) {
               console.log(res)
               if (res.result.msg == 'ok') {
-                wx.cloud.deleteFile({
-                  fileList: [blogdata.picture],
-                  success: res => {
+                // wx.cloud.deleteFile({
+                  // fileList: [blogdata.picture],
+                  // success: res => {
                     wx.showToast({
                       icon: 'none',
                       title: '删除成功',
@@ -133,9 +134,9 @@ Page({
                       bloginfo: self.data.bloginfo,
                       userinfo: self.data.userinfo
                     })
-                  },
+                  // },
                   fail: console.error
-                })
+                // })
               } else {
                 wx.showToast({
                   icon: 'none',

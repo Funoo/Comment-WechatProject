@@ -1,6 +1,6 @@
 /**
  * 根据openid得到博客(我的发布)
- */
+ */ 
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 

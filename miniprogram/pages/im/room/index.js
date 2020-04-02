@@ -8,7 +8,7 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: '',
-    chatRoomEnvId: 'commentcloud-8srfs',
+    chatRoomEnvId: 'csuxyzhcomment-45202',
     chatRoomCollection: 'kecun',
     chatRoomGroupId: 'tit-bricker',
     chatRoomGroupName: '深夜话题',
@@ -62,7 +62,7 @@ Page({
     const { result } = await wx.cloud.callFunction({
       name: 'login',
       config: {
-        env: 'commentcloud-8srfs',
+        env: 'csuxyzhcomment-45202',
       },
     })
 

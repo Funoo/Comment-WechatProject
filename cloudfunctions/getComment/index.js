@@ -46,8 +46,23 @@ exports.main = async(event, context) => {
       errMsg: acc.errMsg,
     }
   })
+  // //返回blog
+  // const tasks3 = []
+  // for (let i = 0; i < commentinfo.data.length; i++) {
+  //   const promise3 = await db.collection('blog').where({
+  //     openid:  commentinfo.data[i].openid
+  //   }).get()
+  //   tasks.push(promise3)
+  // }
+  // const blog = (await Promise.all(tasks3)).reduce((acc, cur) => {
+  //   return {
+  //     data: acc.data.concat(cur.data),
+  //     errMsg: acc.errMsg,
+  //   }
+  // })
   return {
     commentinfo,
+    // blog, 
     commentuserinfo
   }
 }

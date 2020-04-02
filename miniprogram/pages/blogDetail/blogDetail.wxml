@@ -1,7 +1,7 @@
 <view class=' bg-white padding-xl radius shadow-lg'>
   <!-- <image class='bg-white' src='{{blogdata.picture}}' mode="aspectFit"></image> -->
   <view class='text-content text-xl'>
-    <view>{{blogdata.content}}</view>
+    <view class="text text-content" style="font-family:microsoft yahei;white-space:pre-line">{{blogdata.content}}</view>
   </view>
 </view>
 
@@ -19,7 +19,10 @@
     </view>
   </view>
 </view>
-<view bindtap="writecomment" class="text-blue text-lg" style='text-align:right;margin: 30rpx;'>写评论</view>
+
+<view bindtap="writecomment"  class="text-blue text-lg" style='text-align:right;margin: 30rpx;'>写评论</view> 
+<view hidden="{{hidden}}" data-item="{{commentinfo.item}}" data-index="{{commentinfo.index}}" bindtap="managerDel"  class="text-red text-df " style='text-align:center;margin-left: 170rpx;'>删除整篇</view>
+
 
 
 <view wx:for="{{commentinfo}}" wx:key="key" wx:for-index="index" wx:for-item="item">
@@ -28,13 +31,16 @@
       <view class="cu-avatar round" style="background-image:url({{commentuserinfo[index].avatarUrl}});"></view>
       <view class="content">
         <view class="text-grey">{{commentuserinfo[index].nickName}}</view>
-        <view class="text-gray text-content text-df">
+        <view class="text-blue text-content text-df">
           {{ item.content}}
         </view>
         <view class="margin-top-sm flex justify-between">
           <view class="text-gray text-df">{{ item.commentdate}}</view>
         </view>
+        <view hidden="{{hidden}}" data-id="{{item._id}}" data-commentindex="{{index}}"  bindtap="delcomment"  class="text-red text-df " style='text-align:center;margin-left: 170rpx;'>删除该评论</view>
         <view bindtap="delcomment" data-id="{{item._id}}" data-commentindex="{{index}}" wx:if="{{item.openid==myopenid}}" class="text-df text-red text-del">删除</view>
+
+  
       </view>
     </view>
   </view>

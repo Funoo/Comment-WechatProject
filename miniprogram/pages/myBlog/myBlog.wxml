@@ -12,11 +12,14 @@
   <view class="solid-bottom"></view>
   <view class="cu-card case no-card">
     <view class="cu-item shadow">
-      <view class="image" data-item="{{item}}" data-index="{{index}}" data-user="{{userinfo[index]}}" bindlongtap='onDeleteBlog' bindtap="viewItem" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd">
-        <image src="{{item.picture}}" mode="aspectFit" style='height: 288rpx;'></image>
-        <view class="cu-bar bg-shadeBottom">
-          <text class="text-cut">{{item.title}}</text>
+      <view class="image solids::after bg-blue.light" style="height:120rpx" data-item="{{item}}" data-index="{{index}}" data-user="{{userinfo[index]}}" bindlongtap='onDeleteBlog' bindtap="viewItem" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd">
+         <view class="bg-shadeTop ">
+          <text class="text-cut" style=" width:30px;">{{item.title}}</text>
         </view>
+        <!-- <image src="{{item.picture}}" mode="aspectFit" style='height: 288rpx;'></image> -->
+        <!-- <view class="cu-bar ">
+          <text class="text-cut">{{item.title}}</text>
+        </view> -->
       </view>
       <view class="cu-list menu-avatar">
         <view class="cu-item">
